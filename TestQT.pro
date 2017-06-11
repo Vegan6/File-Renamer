@@ -28,10 +28,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+    seriesparser.cpp
 
 HEADERS += \
-        mainwindow.h
+        mainwindow.h \
+    seriesparser.h
 
 FORMS += \
         mainwindow.ui
+
+INCLUDEPATH += /usr/include/c++/7.1.1

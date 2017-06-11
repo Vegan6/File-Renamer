@@ -81,7 +81,7 @@
      <widget class="QPushButton" name="btnOpenFiles">
       <property name="geometry">
        <rect>
-        <x>90</x>
+        <x>80</x>
         <y>330</y>
         <width>80</width>
         <height>23</height>
