@@ -37,6 +37,8 @@ void MainWindow::OpenFiles()
     QStringList
             fileNames;
 
+    qDebug() << "you just clicked ok";
+
     fileNames = QFileDialog::getOpenFileNames(this, tr("Open File"),"/home/",tr("*.*"));
 
     for (QString & fileName : fileNames)
