@@ -11,12 +11,25 @@ seriesparser::seriesparser(std::string FileName)
     fileName = FileName;
 }
 
+// String Replace
+static inline void ReplaceInMem(std::string &text, const std::string& from, const std::string& to)
+{
+    std::size_t
+            start_pos = 0;
+
+    while((start_pos = text.find(from, start_pos)) != std::string::npos)
+    {
+        text.replace(start_pos, from.length(), to);
+        start_pos += to.length();
+    }
+}
+
 //Normalize filename
 std::string NormalizeString(std::string FileName)
 {
     // Replace . _  with space
-    ReplaceInMem(&FileName, ".", " ");
-    ReplaceInMem(&FileName, "_", " ");
+    ReplaceInMem(FileName, ".", " ");
+    ReplaceInMem(FileName, "_", " ");
 
     // Remove some normal add ons
     //xvid 1080 720 eztv ettv
@@ -27,7 +40,7 @@ std::string NormalizeString(std::string FileName)
 //Parse out TV series name and year
 std::string GetSeriesNameInMem (std::string &fileName)
 {
-
+    return fileName;
 }
 
 //Parse out season, episode
@@ -57,14 +70,14 @@ bool setEpisodeSeason (std::string &fileName)
             seasonEpisode;
 
     // Check Pattern 1 S01E06
-    if (std::regex_search(fileName.begin(), fileName.end(), match, pattern1))
+    if (std::regex_search(fileName, match, pattern1))
     {
         seasonEpisode = std::string(match[0]);
         std::smatch sMatch;
-        if (std::regex_search(seasonEpisode.begin(), seasonEpisode.end(), sMatch, std::regex("[0-9]{0,2}[1-9]")))
+        if (std::regex_search(seasonEpisode, sMatch, std::regex("[0-9]{0,2}[1-9]")))
         {
             season = sMatch[0];
-            episode = smatch[1];
+            episode = sMatch[1];
             return true;
         }
         else
@@ -73,14 +86,14 @@ bool setEpisodeSeason (std::string &fileName)
         }
     }
     // Check Pattern 1 01x06
-    else if (std::regex_search(fileName.begin(), fileName.end(), match, pattern2))
+    else if (std::regex_search(fileName, match, pattern2))
     {
         seasonEpisode = std::string(match[0]);
         std::smatch sMatch;
-        if (std::regex_search(seasonEpisode.begin(), seasonEpisode.end(), sMatch, "[0-9]{0,2}[1-9]"))
+        if (std::regex_search(seasonEpisode, sMatch, std::regex("[0-9]{0,2}[1-9]")))
         {
             season = sMatch[0];
-            episode = smatch[1];
+            episode = sMatch[1];
             return true;
         }
         else
@@ -89,18 +102,8 @@ bool setEpisodeSeason (std::string &fileName)
         }
     }
 
+    return false;
 
 }
 
-// String Replace
-static inline void ReplaceInMem(std::string &text, const std::string& from, const std::string& to)
-{
-    std::size_t
-            start_pos = 0;
 
-    while((start_pos = text.find(from, start_pos)) != std::string::npos)
-    {
-        text.replace(start_pos, from.length(), to);
-        start_pos += to.length();
-    }
-}
